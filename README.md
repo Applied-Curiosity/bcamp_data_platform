@@ -376,38 +376,43 @@ BCAMP and Applied Curiosity's Data Platform Infrastructure
     - Define a job to run the deployment. Configure it to run on an Ubuntu runner and include steps to check out the code, set up Python, install dependencies, and execute Pulumi commands. For instance:
         
         ```yaml
-        jobs:
-          deploy:
-            runs-on: ubuntu-latest
-            steps:
-              - name: Checkout Code
-                uses: actions/checkout@v2
-        
-              - name: Set up Python
-                uses: actions/setup-python@v2
-                with:
-                  python-version: '3.x'
-        
-              - name: Install Dependencies
-                run: |
-                  pip install -r requirements.txt
-        
-              - name: Deploy with Pulumi
-                run: |
-                  pulumi up --yes
-        
-        ```
-        
-    - Include authentication steps using Azure credentials before running Pulumi commands:
-        
-        ```yaml
-              - name: Login to Azure
-                uses: azure/login@v1
-                with:
-                  client-id: ${{ secrets.AZURE_CLIENT_ID }}
-                  tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-                  subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        
+                name: Deploy Azure Infrastructure with Pulumi
+                on:
+                workflow_dispatch:
+
+                permissions:
+                    id-token: write
+                    contents: read
+
+                jobs:
+                build-and-deploy:
+                    runs-on: ubuntu-latest
+                    steps:
+                    - name: Checkout Code
+                        uses: actions/checkout@v4
+
+                    - name: Setup Python
+                        uses: actions/setup-python@v4
+                        with:
+                        python-version: '3.x'
+
+                    - name: Installing dependencies
+                        run: |
+                        pip install -r $GITHUB_WORKSPACE/infra/requirements.txt
+
+                    - name: Deploy with Pulumi
+                        uses: pulumi/actions@v5
+                        with:
+                        command: up
+                        stack-name: applied-curiosity/bcamp_data_platform_azure/dev1
+                        work-dir: infra
+                        env:
+                        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+                        ARM_USE_OIDC: 'true'
+                        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+                        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+                        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
         ```
         
 4. **Push Changes to GitHub:**
