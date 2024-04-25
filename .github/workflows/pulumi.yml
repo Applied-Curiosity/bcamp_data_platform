@@ -25,12 +25,9 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Change to infra directory
-        run: cd infra
-
       - name: Installing dependencies
         run: |
-          pip install -r requirements.txt
+          pip install -r $GITHUB_WORKSPACE/infra/requirements.txt
 
       - name: Deploy with Pulumi
         uses: pulumi/actions@v5
