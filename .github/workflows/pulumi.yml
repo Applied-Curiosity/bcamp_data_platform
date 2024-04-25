@@ -32,6 +32,7 @@ jobs:
       - name: Deploy with Pulumi
         uses: pulumi/actions@v5
         with:
+          work-dir: $GITHUB_WORKSPACE/infra/
           command: up
           stack-name: applied-curiosity/bcamp_data_platform_azure/dev1
         env:
