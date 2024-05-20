@@ -1,0 +1,10 @@
+yamlCopy code
+storage_account:
+  name: pulumiStorageAccount
+  resource_group_name: pulumi-resources
+  location: eastus
+  account_tier: Standard
+  replication_type: LRS
+  private_endpoint:
+    name: storagePrivateEndpoint
+    subnet_id: /subscriptions/{sub-id}/resourceGroups/{rg}/providers/Microsoft.Network/virtualNetworks/{vnet}/subnets/{subnet}
