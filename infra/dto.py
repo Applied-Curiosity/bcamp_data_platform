@@ -48,3 +48,23 @@ class NSGConfig:
     location: str
     resource_group_name: str
     security_rules: List[SecurityRuleConfig]
+
+# The Data Transfer Object (DTO) helps ensure that data passed from the configuration to the Pulumi script is structured and type-safe.
+
+**dto.py:**
+pythonCopy code
+from dataclasses import dataclass
+
+@dataclass
+class PrivateEndpointConfig:
+    name: str
+    subnet_id: str
+
+@dataclass
+class StorageAccountConfig:
+    name: str
+    resource_group_name: str
+    location: str
+    account_tier: str
+    replication_type: str
+    private_endpoint: PrivateEndpointConfig
