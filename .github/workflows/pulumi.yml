@@ -1,4 +1,15 @@
-name: Deploy Azure Infrastructure with Pulumi
+name: bcamp_data_platform_azure
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: IaC for BCAMP Data Platform
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ""
+      
+  name: Deploy Azure Infrastructure with Pulumi
 on:
   workflow_dispatch:
 
