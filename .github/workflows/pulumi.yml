@@ -1,6 +1,6 @@
    
   name: Deploy Azure Infrastructure with Pulumi
-on:
+on: [push]
   workflow_dispatch:
 
 permissions:
