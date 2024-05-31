@@ -1,28 +1,32 @@
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Dict, Optional
 
-
-# network configuration
+# defining storage
 @dataclass
-class SubnetConfig:
+class StorageAccountConfig: # echoes the yaml file, but not sure this is correct
     name: str
-    address_prefix: str
+    type: str
+    outputs: str
+
 
 @dataclass
-class NSGRuleConfig:
-    name: str
-    priority: int
-    direction: str
-    access: str
-    protocol: str
-    source_port_range: str
-    destination_port_range: str
-    source_address_prefix: str
-    destination_address_prefix: str
+class StorageConfigDTO:
+    storage_accounts: List[StorageAccountConfig]
+    outputs: Dict[str, List[str]] = field(default_factory=dict)
+
+    @staticmethod
+    def from_dict(config: dict) -> 'StorageConfigDTO':
+        accounts = [StorageAccountConfig(**storage) for storage in config['storage']]
+        outputs = config.get('outputs', {})
+        return StorageConfigDTO(storage_accounts=accounts, outputs=outputs)
+
 
 @dataclass
-class NetworkConfig:
-    vnet_name: str
-    address_space: str
-    subnets: List[SubnetConfig]
-    nsg: List[NSGRuleConfig]
+class ConfigDTO:
+    storage: StorageAccountConfig
+
+    @staticmethod
+    def from_dict(config: dict) -> 'ConfigDTO':
+        return ConfigDTO(
+            storage=StorageAccountConfig(**config['storage'])
+        )

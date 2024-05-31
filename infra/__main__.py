@@ -1,9 +1,13 @@
 """An Azure RM Python Pulumi program"""
 
 import pulumi
+import yaml
+import json
 from pulumi_azure_native import resources
-from pulumi_azure_native import storage
-from resources.networking import SubnetConfig, NetworkConfig, NSGRuleConfig
+from resources_dir.storage import StorageResource
+from dto import ConfigDTO
+
+
 
 # Create an Azure Resource Group
 # Naming convention is
@@ -13,31 +17,15 @@ from resources.networking import SubnetConfig, NetworkConfig, NSGRuleConfig
 # adb = Azure Databricks
 # acclrtor = Accelerator
 
-resource_group = resources.ResourceGroup('rg-ac-cus-adb-acclrtor')
 
+stack = pulumi.get_stack()
+config_path = f'Pulumi.dev1.yaml'
 
-# create storage
-account = storage.StorageAccount(
-    "sa",
-    resource_group_name=resource_group.name,
-    sku=storage.SkuArgs(
-        name=storage.SkuName.STANDARD_LRS,
-    ),
-    kind=storage.Kind.STORAGE_V2,
-)
+with open(config_path, 'r') as file:
+     config_data = yaml.safe_load(file)
 
-# Export the primary key of the Storage Account
-primary_key = (
-    pulumi.Output.all(resource_group.name, account.name)
-    .apply(
-        lambda args: storage.list_storage_account_keys(
-            resource_group_name=args[0], account_name=args[1]
-        )
-    )
-    .apply(lambda accountKeys: accountKeys.keys[0].value)
-)
+config_dto = ConfigDTO.from_dict(config_data)
 
-pulumi.export("primary_storage_key", primary_key)
+storage_resource = StorageResource(config_dto.storage)
 
-
-# working on networking, small steps but created a resources directory, resource group and storage
+pulumi.export('storage_resource_outputs', storage_resource.output_dto().outputs)
