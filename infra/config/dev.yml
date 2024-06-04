@@ -1,0 +1,21 @@
+storage_account: # configuration for storage
+  name: sa
+  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  location: southcentralus
+  account_tier: Standard
+  replication_type: LRS
+  outputs: ""
+
+keyvault: # configuration for keyvault
+  resource_name: vault
+  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  location: southcentralus
+  sku_name: STANDARD
+  tenant_id: 00000000-0000-0000-0000-000000000000
+  access_policies:
+    - tenant_id: 00000000-0000-0000-0000-000000000000
+      object_id: 00000000-0000-0000-0000-000000000000
+      permissions:
+        keys: ["get", "list", "create", "delete"]
+        secrets: ["get", "list", "set", "delete"]
+  outputs: ""

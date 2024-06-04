@@ -1,8 +1,2 @@
 config:
   azure-native:location: southcentralus
-
-storage:
-    name: sa
-    type: azure-native:storage:StorageAccount
-    outputs:
-      storage_primary_key: ""
