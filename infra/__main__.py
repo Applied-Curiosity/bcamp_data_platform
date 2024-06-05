@@ -6,6 +6,7 @@ import json
 from pulumi_azure_native import resources
 from resources_dir.storage import StorageResource
 from resources_dir.keyvault import KeyvaultResource
+from resources_dir.security import SecurityResource
 from dto import ConfigDTO
 
 
@@ -30,6 +31,7 @@ config_dto = ConfigDTO.from_dict(config_data)
 
 storage_resource = StorageResource(config_dto.storage)
 keyvault_resource = KeyvaultResource(config_dto.keyvault)
+nsg_resource = SecurityResource(config_dto.nsg)
 
 
 # exporting pulumi resources

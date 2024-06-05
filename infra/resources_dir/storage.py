@@ -15,7 +15,7 @@ class StorageResource:
 
     def create_storage(self):
         account = storage.StorageAccount(
-            resource_name="sa",
+            resource_name="sa", # change this so its not hard coded
             resource_group_name=self.config.resource_group_name,
             sku=storage.SkuArgs(
                 name=storage.SkuName.STANDARD_LRS,

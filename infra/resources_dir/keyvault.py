@@ -1,4 +1,3 @@
-
 import sys
 sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
@@ -14,7 +13,7 @@ class KeyvaultResource:
         self.config = config # not sure why this isnt working, explains all self.config.____ in create_keyvault()
         self.create_keyvault()
 
-    def create_keyvault(self):
+    def create_keyvault(self): # see if importing self.config cleans up code
         kv = keyvault.Vault(
             resource_name=self.config.resource_name,
             resource_group_name=self.config.resource_group_name,

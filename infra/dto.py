@@ -47,22 +47,42 @@ class KeyvaultConfigDTO:
     outputs: Dict[str, List[str]] = field(default_factory=dict)
 
     @staticmethod
-    def from_dict(config: dict) -> 'StorageConfigDTO':
+    def from_dict(config: dict) -> 'KeyvaultConfigDTO':
         keyvault = [KeyvaultConfig(**keyvault) for keyvault in config['keyvault']]
         outputs = config.get('outputs', {})
-        return KeyvaultConfigDTO(keyvaults=keyvault)
+        return KeyvaultConfigDTO(keyvaults=keyvault, outputs=outputs)
+
+# defining security
+@dataclass
+class SecurityRuleConfig:
+    name: str
+    priority: int
+    direction: str
+    access: str
+    protocol: str
+    source_port_range: str
+    destination_port_range: str
+    source_address_prefix: str
+    destination_address_prefix: str
 
 
-
+@dataclass
+class NSGConfig:
+    name: str
+    location: str
+    resource_group_name: str
+    security_rules: List[SecurityRuleConfig]
 
 @dataclass
 class ConfigDTO:
     storage: StorageAccountConfig
     keyvault: KeyvaultConfig
+    nsg: SecurityRuleConfig
 
     @staticmethod
     def from_dict(config: dict) -> 'ConfigDTO':
         return ConfigDTO(
             storage=StorageAccountConfig(**config['storage_account']),
-            keyvault=KeyvaultConfig(**config['keyvault'])
+            keyvault=KeyvaultConfig(**config['keyvault']),
+            nsg=NSGConfig(**config['nsg_config'])
         )
