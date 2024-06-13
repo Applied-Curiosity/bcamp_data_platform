@@ -1,4 +1,4 @@
-storage_account: # configuration for storage
+storage_account: # configuration for storage, might have to alter this, there is more than one different kind of sa
   name: sa
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a # these work, just hard coded resource group name
   location: southcentralus
@@ -6,7 +6,7 @@ storage_account: # configuration for storage
   replication_type: LRS
   outputs: ""
 
-keyvault: # configuration for keyvault
+keyvault: # configuration for keyvault, gonna have to change as well
   resource_name: vault
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
   location: southcentralus
@@ -21,7 +21,7 @@ keyvault: # configuration for keyvault
         secrets: ["get", "list", "set", "delete"]
   outputs: ""
 
-nsg_config: # configuration for the security layer
+nsg_config: # configuration for the security layer, here for now, gonna have to alter to change the architecture
   name: main-nsg
   location: southcentralus
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
@@ -44,3 +44,48 @@ nsg_config: # configuration for the security layer
       destination_port_range: "443"
       source_address_prefix: "*"
       destination_address_prefix: "*"
+
+data_factory: # don't know if this is correct yet, just putting this there
+  resource_group_name:
+  identity:
+  location:
+  customer_managed_key_id:
+  name:
+  public_network_enabled:
+  tags:
+
+bastion_host:
+  resource_group_name:
+  name:
+  location:
+  subnet_id:
+  public_ip_address_name:
+
+data_lake:
+  storage_account_id:
+  aces:
+  default_encryption_scope:
+  group:
+  name:
+  owner:
+  properties:
+
+networking:
+  vnet_name: #vnet-demo-databricks
+  address_space: #172.-------
+  subnets:
+    - name: #default
+      address_space: #172.----
+    - name: #azurebastionsubnet
+      address_space:
+    - name: #subnet-keyvault
+      address_space:
+    - name: #subnet-lakehouse
+      address_space:
+    - name: # databricks-workspace
+      address_space:
+    - name: #public_subnet
+      address_space:
+    - name: #private-subnet
+      address_space:
+  nsg: # gonna have to fix this, unclear how to configure
