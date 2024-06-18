@@ -58,8 +58,10 @@ bastion_host:
   resource_group_name:
   name:
   location:
-  subnet_id:
-  public_ip_address_name:
+  ip_configuration:
+    - name:
+      subnet_id:
+      public_ip_address_name:
 
 data_lake:
   storage_account_id:
@@ -70,22 +72,104 @@ data_lake:
   owner:
   properties:
 
-networking:
-  vnet_name: #vnet-demo-databricks
+vnet:
+  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  name: vnet-demo-databricks
+  location:
   address_space: #172.-------
   subnets:
     - name: #default
-      address_space: #172.----
+      address_prefix: #172.----
     - name: #azurebastionsubnet
-      address_space:
+      address_prefix:
     - name: #subnet-keyvault
-      address_space:
+      address_prefix:
     - name: #subnet-lakehouse
-      address_space:
+      address_prefix:
     - name: # databricks-workspace
-      address_space:
+      address_prefix:
     - name: #public_subnet
-      address_space:
+      address_prefix:
     - name: #private-subnet
-      address_space:
-  nsg: # gonna have to fix this, unclear how to configure
+      address_prefix:
+
+
+
+adb:
+  $schema: ""
+  contentVersion: ""
+  parameters:
+    workspaces_name:
+      defaultValue: ""
+      type: ""
+    externalid:
+      defaultValue: ""
+      type: "String"
+  variables: {}
+  resources:
+    - type: ""
+      apiVersion: ""
+      name: ""
+      location: ""
+      tags:
+        environment: ""
+      sku:
+        name: ""
+      properties:
+        defaultCatalog:
+          initialType: ""
+        publicNetworkAccess: ""
+        requiredNsgRules: ""
+        managedResourceGroupId: ""
+        parameters:
+          customPrivateSubnetName:
+            value: ""
+          customPublicSubnetName:
+            value: ""
+          customVirtualNetworkId:
+            value: ""
+          enableNoPublicIp:
+            value: ""
+          prepareEncryption:
+            value: ""
+          publicIpName:
+            value: ""
+          requireInfrastructureEncryption:
+            value: ""
+          storageAccountName:
+            value: ""
+          storageAccountSkuName:
+            value: ""
+          vnetAddressPrefix:
+            value: ""
+        authorizations:
+          - principalId: ""
+            roleDefinitionId: ""
+        createdBy: {}
+        updatedBy: {}
+    - type: "Microsoft.Databricks/workspaces/privateEndpointConnections"
+      apiVersion: "2023-09-15-preview"
+      name: ""
+      dependsOn:
+        - ""
+      properties:
+        privateEndpoint: {}
+        groupIds:
+          - ""
+        privateLinkServiceConnectionState:
+          status: ""
+          description: ""
+          actionsRequired: ""
+    - type: "Microsoft.Databricks/workspaces/privateEndpointConnections"
+      apiVersion: "2023-09-15-preview"
+      name: ""
+      dependsOn:
+        - ""
+      properties:
+        privateEndpoint: {}
+        groupIds:
+          - ""
+        privateLinkServiceConnectionState:
+          status: ""
+          description: ""
+          actionsRequired: ""

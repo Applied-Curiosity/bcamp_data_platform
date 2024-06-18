@@ -14,7 +14,7 @@ class VirtualNetworkResource:
     def create_virtual_network(self): # currently working on this
         vnet = network.VirtualNetwork(
             resource_group_name=config.resource_group_name,
-            resource_name=config.resource_name,
+            name=config.name,
             location=config.location,
             address_space=config.address_space,
             subnets=[network.VirtualNetworkSubnetArgs(
@@ -23,18 +23,7 @@ class VirtualNetworkResource:
                 ) for self.config.sn in self.config.subnets]
         )
 
+        pulumi.export('vnet_id', vnet.id)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        )
+    def output_dto(self) -> VirtualNetworkConfig:
+        return self.config

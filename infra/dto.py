@@ -74,15 +74,45 @@ class NSGConfig:
     security_rules: List[SecurityRuleConfig]
 
 @dataclass
+class SubnetConfig:
+    name: str
+    address_prefix: str
+
+@dataclass
+class VirtualNetworkConfig:
+    name: str
+    location: str
+    resource_group_name: str
+    address_space: str
+    subnets: List[SubnetConfig]
+
+@dataclass
+class BastionIpConfig:
+    name: str
+    subnet_id: str
+    public_ip_address_id: str
+
+@dataclass
+class BastionHostConfig:
+    resource_group_name: str
+    location: str
+    name: str
+    ip_configuration: List[BastionIpConfig]
+
+@dataclass
 class ConfigDTO:
     storage: StorageAccountConfig
     keyvault: KeyvaultConfig
     nsg: SecurityRuleConfig
+    vnet: VirtualNetworkConfig
+    bastion: BastionHostConfig
 
     @staticmethod
     def from_dict(config: dict) -> 'ConfigDTO':
         return ConfigDTO(
             storage=StorageAccountConfig(**config['storage_account']),
             keyvault=KeyvaultConfig(**config['keyvault']),
-            nsg=NSGConfig(**config['nsg_config'])
+            nsg=NSGConfig(**config['nsg_config']),
+            vnet=VirtualNetworkConfig(**config['vnet']),
+            bastion=BastionHostConfig(**config['bastion_host'])
         )
