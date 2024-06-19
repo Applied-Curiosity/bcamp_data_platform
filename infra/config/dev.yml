@@ -56,13 +56,13 @@ data_factory: # don't know if this is correct yet, just putting this there
   tags:
 
 bastion_host:
-  resource_group_name:
-  name:
-  location:
+  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  name: bastion-host
+  location: southcentralus
   ip_configuration:
     - name:
-      subnet_id:
-      public_ip_address_name:
+      subnet_id: bastion-subnet-id
+      public_ip_address_name: IpConf
 
 data_lake:
   storage_account_id:
@@ -76,27 +76,27 @@ data_lake:
 vnet:
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
   name: vnet-demo-databricks
-  location:
-  address_space: #172.-------
+  location: southcentralus
+  address_prefix: 172.16.0.0/16
   subnets:
-    - name: #default
-      address_prefix: #172.----
-    - name: #azurebastionsubnet
+    - name: default
+      address_prefix: 172.16.0.0/24
+    - name: AzureBastionSubnet
+      address_prefix: 172.16.0.0/24
+    - name: subnet-key-vault
+      address_prefix: 172.16.3.0/24
+    - name: subnet-lakehouse
+      address_prefix: 172.16.2.0/24
+    - name: databricks-workspace
       address_prefix:
-    - name: #subnet-keyvault
-      address_prefix:
-    - name: #subnet-lakehouse
-      address_prefix:
-    - name: # databricks-workspace
-      address_prefix:
-    - name: #public_subnet
-      address_prefix:
-    - name: #private-subnet
-      address_prefix:
+    - name: public_subnet
+      address_prefix: 172.16.4.0/24
+    - name: private-subnet
+      address_prefix: 172.16.5.0/2
 
 
 
-adb:
+adb: # don't know if this is right
   $schema: ""
   contentVersion: ""
   parameters:

@@ -83,7 +83,7 @@ class VirtualNetworkConfig:
     name: str
     location: str
     resource_group_name: str
-    address_space: str
+    address_prefix: str
     subnets: List[SubnetConfig]
 
 @dataclass
