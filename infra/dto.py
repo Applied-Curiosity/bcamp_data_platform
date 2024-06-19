@@ -99,6 +99,21 @@ class BastionHostConfig:
     name: str
     ip_configuration: List[BastionIpConfig]
 
+
+@dataclass
+class VirtualMachineConfig: # might be missing a large amount of compute configurations
+    resource_group_name: str
+    location: str
+    vm_name: str
+    user: str
+    pw: str
+    network_interface_id: str
+    os_computer_name: str
+    os_disk_name: str
+
+
+
+
 @dataclass
 class ConfigDTO:
     storage: StorageAccountConfig
@@ -106,6 +121,7 @@ class ConfigDTO:
     nsg: SecurityRuleConfig
     vnet: VirtualNetworkConfig
     bastion: BastionHostConfig
+    vm: VirtualMachineConfig
 
     @staticmethod
     def from_dict(config: dict) -> 'ConfigDTO':
@@ -114,5 +130,6 @@ class ConfigDTO:
             keyvault=KeyvaultConfig(**config['keyvault']),
             nsg=NSGConfig(**config['nsg_config']),
             vnet=VirtualNetworkConfig(**config['vnet']),
-            bastion=BastionHostConfig(**config['bastion_host'])
+            bastion=BastionHostConfig(**config['bastion_host']),
+            vm=VirtualMachineConfig(**config['virtual_machine'])
         )

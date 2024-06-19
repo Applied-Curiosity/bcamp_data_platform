@@ -9,6 +9,7 @@ from resources_dir.keyvault import KeyvaultResource
 from resources_dir.security import SecurityResource
 from resources_dir.networking import VirtualNetworkResource
 from resources_dir.bastion import BastionHostResource
+from resources_dir.compute import VirtualMachineResource
 from dto import ConfigDTO
 
 
@@ -35,6 +36,7 @@ storage_resource = StorageResource(config_dto.storage)
 keyvault_resource = KeyvaultResource(config_dto.keyvault)
 nsg_resource = SecurityResource(config_dto.nsg)
 vnet_resource = VirtualNetworkResource(config_dto.vnet)
+vm_resource = VirtualMachineResource(config_dto.vm)
 
 
 # exporting pulumi resources

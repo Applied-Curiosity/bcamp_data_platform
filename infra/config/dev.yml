@@ -1,3 +1,4 @@
+
 storage_account: # configuration for storage, might have to alter this, there is more than one different kind of sa
   name: sa
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a # these work, just hard coded resource group name
@@ -173,3 +174,13 @@ adb:
           status: ""
           description: ""
           actionsRequired: ""
+
+virtual_machine:
+  resource_group_name: myResourceGroup
+  location: westus
+  vm_name: myVM
+  user: your-username
+  pw: your-password
+  network_interface_id: /subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}
+  os_computer_name: myVM
+  os_disk_name: myVMosdisk
