@@ -59,10 +59,11 @@ bastion_host:
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
   name: bastion-host
   location: southcentralus
-  ip_configuration:
-    - name:
-      subnet_id: bastion-subnet-id
-      public_ip_address_name: IpConf
+  ip_config_name:
+  subnet_id:
+  public_ip_address_id:
+
+
 
 data_lake:
   storage_account_id:
@@ -79,19 +80,26 @@ vnet:
   location: southcentralus
   address_prefix: 172.16.0.0/16
   subnets:
-    - name: default
+    - resource_name: subnet
+      name: default
       address_prefix: 172.16.0.0/24
-    - name: AzureBastionSubnet
+    - resource_name: subnet
+      name: AzureBastionSubnet
       address_prefix: 172.16.0.0/24
-    - name: subnet-key-vault
+    - resource_name: subnet
+      name: subnet-key-vault
       address_prefix: 172.16.3.0/24
-    - name: subnet-lakehouse
+    - resource_name: subnet
+      name: subnet-lakehouse
       address_prefix: 172.16.2.0/24
-    - name: databricks-workspace
+    - resource_name: subnet
+      name: databricks-workspace
       address_prefix:
-    - name: public_subnet
+    - resource_name: subnet
+      name: public_subnet
       address_prefix: 172.16.4.0/24
-    - name: private-subnet
+    - resource_name: subnet
+      name: private-subnet
       address_prefix: 172.16.5.0/2
 
 

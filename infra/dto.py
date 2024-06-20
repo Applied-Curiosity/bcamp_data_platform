@@ -87,17 +87,13 @@ class VirtualNetworkConfig:
     subnets: List[SubnetConfig]
 
 @dataclass
-class BastionIpConfig:
-    name: str
-    subnet_id: str
-    public_ip_address_id: str
-
-@dataclass
 class BastionHostConfig:
     resource_group_name: str
     location: str
     name: str
-    ip_configuration: List[BastionIpConfig]
+    ip_config_name: str
+    subnet_id: str
+    public_ip_address_id: str
 
 
 @dataclass
