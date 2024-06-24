@@ -1,11 +1,18 @@
 
-storage_account: # configuration for storage, might have to alter this, there is more than one different kind of sa
-  name: sa
-  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a # these work, just hard coded resource group name
-  location: southcentralus
-  account_tier: Standard
-  replication_type: LRS
-  outputs: ""
+storage: # configuration for storage, might have to alter this, there is more than one different kind of sa
+  lakehouse:
+  - account_name: sa_lakehouse
+    resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a # these work, just hard coded resource group name
+    location: southcentralus
+    account_tier: Standard
+    replication_type: LRS
+  landing_zone:
+  - account_name: sa_lz
+    resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+    location: southcentralus
+    account_tier: Standard
+    replication_type: LRS
+
 
 keyvault: # configuration for keyvault, gonna have to change as well
   resource_name: vault

@@ -4,7 +4,7 @@ from typing import List, Dict, Optional
 # defining storage
 @dataclass
 class StorageAccountConfig: # echoes the yaml file, but not sure this is correct
-    name: str
+    account_name: str
     resource_group_name: str
     location: str
     account_tier: str

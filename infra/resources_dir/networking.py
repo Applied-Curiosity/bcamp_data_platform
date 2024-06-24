@@ -11,7 +11,7 @@ class VirtualNetworkResource:
         self.config = config
         self.create_virtual_network()
 
-    def create_virtual_network(self): # currently working on this
+    def create_virtual_network(self):
         vnet = network.VirtualNetwork(
             resource_group_name=self.config.resource_group_name,
             resource_name=self.config.name,

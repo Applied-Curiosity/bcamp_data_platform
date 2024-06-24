@@ -1,3 +1,4 @@
+
 import sys
 sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
@@ -16,7 +17,7 @@ class VirtualMachineResource:
         hardware_profile=compute.HardwareProfileArgs(
             vm_size=compute.VirtualMachineSizeTypes.STANDARD_D2S_V3,
         ),
-        location=config.location,
+        location=self.config.location,
         network_profile=compute.NetworkProfileArgs(
             network_interfaces=[compute.NetworkInterfaceReferenceArgs(
                 id="/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}",
@@ -24,9 +25,9 @@ class VirtualMachineResource:
             )],
         ),
         os_profile=compute.OSProfileArgs(
-            admin_password=config.pw,
-            admin_username=config.user,
-            computer_name=config.os_computer_name
+            admin_password=self.config.pw,
+            admin_username=self.config.user,
+            computer_name=self.config.os_computer_name
         ),
         resource_group_name="myResourceGroup",
         storage_profile=compute.StorageProfileArgs(
@@ -42,7 +43,7 @@ class VirtualMachineResource:
                 managed_disk=compute.ManagedDiskParametersArgs(
                     storage_account_type=compute.StorageAccountTypes.PREMIUM_LRS,
                 ),
-                name=config.os_disk_name,
+                name=self.config.os_disk_name,
             ),
         ),
         vm_name="myVM")
