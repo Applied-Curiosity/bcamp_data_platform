@@ -1,6 +1,6 @@
 
-import sys
-sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
+# import sys
+# sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
 import pulumi
 from pulumi_azure_native import compute
@@ -13,6 +13,7 @@ class VirtualMachineResource:
         self.create_vm()
 
     def create_vm(self):
+        # config = self.config
         virtual_machine = compute.VirtualMachine("virtualMachine",
         hardware_profile=compute.HardwareProfileArgs(
             vm_size=compute.VirtualMachineSizeTypes.STANDARD_D2S_V3,

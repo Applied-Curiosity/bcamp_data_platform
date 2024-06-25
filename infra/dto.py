@@ -2,25 +2,31 @@ from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 
 # defining storage
+
 @dataclass
-class StorageAccountConfig: # echoes the yaml file, but not sure this is correct
+class LakehouseConfig:
     account_name: str
     resource_group_name: str
+    container_name: str
+    blob_name: str
     location: str
     account_tier: str
     replication_type: str
-    outputs: str
 
 @dataclass
-class StorageConfigDTO:
-    storage_accounts: List[StorageAccountConfig]
-    outputs: Dict[str, List[str]] = field(default_factory=dict)
+class LandingZoneConfig:
+    account_name: str
+    resource_group_name: str
+    location: str
+    container_name: str
+    blob_name: str
+    account_tier: str
+    replication_type: str
 
-    @staticmethod
-    def from_dict(config: dict) -> 'StorageConfigDTO':
-        accounts = [StorageAccountConfig(**storage) for storage in config['storage']]
-        outputs = config.get('outputs', {})
-        return StorageConfigDTO(storage_accounts=accounts, outputs=outputs)
+@dataclass
+class StorageAccountConfig:
+    lakehouse: List[LakehouseConfig]
+    landing_zone: List[LandingZoneConfig]
 
 # defining key vault
 

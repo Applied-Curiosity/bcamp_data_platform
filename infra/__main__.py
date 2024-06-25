@@ -33,15 +33,11 @@ with open(config_path, 'r') as file:
 config_dto = ConfigDTO.from_dict(config_data)
 
 storage_resource = StorageResource(config_dto.storage)
-keyvault_resource = KeyvaultResource(config_dto.keyvault)
-nsg_resource = SecurityResource(config_dto.nsg)
-vnet_resource = VirtualNetworkResource(config_dto.vnet)
-vm_resource = VirtualMachineResource(config_dto.vm)
-bastion_resource = BastionHostResource(config_dto.bastion)
+# keyvault_resource = KeyvaultResource(config_dto.keyvault)
+# nsg_resource = SecurityResource(config_dto.nsg)
+# vnet_resource = VirtualNetworkResource(config_dto.vnet)
+# vm_resource = VirtualMachineResource(config_dto.vm)
+# bastion_resource = BastionHostResource(config_dto.bastion)
 
 
 # exporting pulumi resources
-
-
-pulumi.export('storage_resource_outputs', storage_resource.output_dto().outputs)
-pulumi.export('keyvault_resources_outputs', keyvault_resource.output_dto().outputs)

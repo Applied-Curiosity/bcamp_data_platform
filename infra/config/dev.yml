@@ -1,17 +1,24 @@
 
-storage: # configuration for storage, might have to alter this, there is more than one different kind of sa
+storage_account: # configuration for storage, might have to alter this, there is more than one different kind of sa
   lakehouse:
-  - account_name: sa_lakehouse
-    resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a # these work, just hard coded resource group name
-    location: southcentralus
-    account_tier: Standard
-    replication_type: LRS
+     account_name: sa_lakehouse
+     resource_group_name: rg-ac-cus-adb-acclrtor # these work, just hard coded resource group name
+     location: southcentralus
+     container_name: lk-cont
+     blob_name: blob-lakehouse
+     private_endpoint_name: pe-conn
+     account_tier: Standard
+     replication_type: LRS
   landing_zone:
-  - account_name: sa_lz
-    resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
-    location: southcentralus
-    account_tier: Standard
-    replication_type: LRS
+     account_name: sa_lz
+     resource_group_name: rg-ac-cus-adb-acclrtor
+     location: southcentralus
+     container_name: lz-cont
+     blob_name: blob-lz
+     private_endpoint_name: pe-conn
+     local_user_name: local-user-lz
+     account_tier: Standard
+     replication_type: LRS
 
 
 keyvault: # configuration for keyvault, gonna have to change as well
@@ -20,7 +27,6 @@ keyvault: # configuration for keyvault, gonna have to change as well
   location: southcentralus
   sku_name: STANDARD
   tenant_id: 12345678-1234-5678-1234-567812345678
-
   access_policies:
     - tenant_id: 12345678-1234-5678-1234-567812345678
       object_id: 87654321-4321-8765-4321-876543218765
@@ -53,15 +59,6 @@ nsg_config: # configuration for the security layer, here for now, gonna have to 
       source_address_prefix: "*"
       destination_address_prefix: "*"
 
-data_factory: # don't know if this is correct yet, just putting this there
-  resource_group_name:
-  identity:
-  location:
-  customer_managed_key_id:
-  name:
-  public_network_enabled:
-  tags:
-
 bastion_host:
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
   name: bastion-host
@@ -70,16 +67,6 @@ bastion_host:
   subnet_id:
   public_ip_address_id:
 
-
-
-data_lake:
-  storage_account_id:
-  aces:
-  default_encryption_scope:
-  group:
-  name:
-  owner:
-  properties:
 
 vnet:
   resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
@@ -191,8 +178,8 @@ adb: # don't know if this is right
           actionsRequired: ""
 
 virtual_machine:
-  resource_group_name: myResourceGroup
-  location: westus
+  resource_group_name: myResourceGroup # change this
+  location: southcentralus
   vm_name: myVM
   user: your-username
   pw: your-password

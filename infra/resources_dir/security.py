@@ -1,3 +1,7 @@
+"""
+Multiple NSGs, look at Azure Portal
+"""
+
 import sys
 sys.path.append('/workspaces/bcamp_data_platform_azure/infra') # see how I can avoid this
 
