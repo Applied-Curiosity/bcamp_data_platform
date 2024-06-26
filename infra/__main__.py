@@ -35,7 +35,7 @@ config_dto = ConfigDTO.from_dict(config_data)
 storage_resource = StorageResource(config_dto.storage)
 # keyvault_resource = KeyvaultResource(config_dto.keyvault)
 # nsg_resource = SecurityResource(config_dto.nsg)
-# vnet_resource = VirtualNetworkResource(config_dto.vnet)
+vnet_resource = VirtualNetworkResource(config_dto.vnet)
 # vm_resource = VirtualMachineResource(config_dto.vm)
 # bastion_resource = BastionHostResource(config_dto.bastion)
 

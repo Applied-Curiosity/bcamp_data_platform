@@ -69,32 +69,32 @@ bastion_host:
 
 
 vnet:
-  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  resource_group_name: rg-ac-cus-adb-acclrtor
   name: vnet-demo-databricks
   location: southcentralus
   address_prefix: 172.16.0.0/16
   subnets:
     - resource_name: subnet
       name: default
-      address_prefix: 172.16.0.0/24
+      address_prefix: 172.16.8.0/24
     - resource_name: subnet
       name: AzureBastionSubnet
-      address_prefix: 172.16.0.0/24
+      address_prefix: 172.16.6.0/24
     - resource_name: subnet
       name: subnet-key-vault
-      address_prefix: 172.16.3.0/24
+      address_prefix: 172.16.7.0/24
     - resource_name: subnet
       name: subnet-lakehouse
-      address_prefix: 172.16.2.0/24
+      address_prefix: 172.16.11.0/24
     - resource_name: subnet
       name: databricks-workspace
-      address_prefix:
+      address_prefix: 172.16.1.0/24
     - resource_name: subnet
       name: public_subnet
-      address_prefix: 172.16.4.0/24
+      address_prefix: 172.16.14.0/24
     - resource_name: subnet
       name: private-subnet
-      address_prefix: 172.16.5.0/2
+      address_prefix: 172.16.5.0/24
 
 
 

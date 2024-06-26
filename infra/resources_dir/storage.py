@@ -9,7 +9,7 @@ import sys
 sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
 from dto import LakehouseConfig, LandingZoneConfig, StorageAccountConfig
-from pulumi_azure_native import storage, resources
+from pulumi_azure_native import storage, network
 import pulumi
 
 class StorageResource:
@@ -40,14 +40,6 @@ class StorageResource:
             container_name= self.config.lakehouse['container_name'],
             resource_group_name=self.config.lakehouse['resource_group_name']
          )
-
-        pe = storage.PrivateEndpointConnection(resource_name=self.config.lakehouse['private_endpoint_name'],
-                   account_name=account.name,
-                   private_link_service_connection_state=storage.PrivateLinkServiceConnectionStateArgs(
-                   description="Auto-Approved",
-                   status=storage.PrivateEndpointServiceConnectionStatus.APPROVED,
-    ),
-    resource_group_name=self.config.lakehouse['resource_group_name'])
 
 
         pulumi.export("account_id", account.id)
