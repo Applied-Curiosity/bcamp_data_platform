@@ -23,8 +23,8 @@ from dto import ConfigDTO
 # acclrtor = Accelerator
 
 
-resource_group = resources.ResourceGroup('rg-ac-cus-adb-acclrtor') # I reckon I need to put this in its own python file
-
+resource_group = resources.ResourceGroup(resource_name='rg-ac-cus-adb-acclrtor',
+                                         resource_group_name='rg-ac-cus-adb-acclrtor')
 config_path = 'config/dev.yml'
 
 with open(config_path, 'r') as file:
@@ -38,6 +38,7 @@ storage_resource = StorageResource(config_dto.storage)
 # vnet_resource = VirtualNetworkResource(config_dto.vnet)
 # vm_resource = VirtualMachineResource(config_dto.vm)
 # bastion_resource = BastionHostResource(config_dto.bastion)
+
 
 
 # exporting pulumi resources

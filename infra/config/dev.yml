@@ -1,8 +1,8 @@
 
 storage_account: # configuration for storage, might have to alter this, there is more than one different kind of sa
   lakehouse:
-     account_name: sa_lakehouse
-     resource_group_name: rg-ac-cus-adb-acclrtor # these work, just hard coded resource group name
+     account_name: salakehouse
+     resource_group_name: rg-ac-cus-adb-acclrtor
      location: southcentralus
      container_name: lk-cont
      blob_name: blob-lakehouse
@@ -10,13 +10,13 @@ storage_account: # configuration for storage, might have to alter this, there is
      account_tier: Standard
      replication_type: LRS
   landing_zone:
-     account_name: sa_lz
+     account_name: salz
      resource_group_name: rg-ac-cus-adb-acclrtor
      location: southcentralus
      container_name: lz-cont
      blob_name: blob-lz
      private_endpoint_name: pe-conn
-     local_user_name: local-user-lz
+     local_user_name: localuserlz
      account_tier: Standard
      replication_type: LRS
 

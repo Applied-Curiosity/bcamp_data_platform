@@ -30,20 +30,19 @@ class StorageResource:
         )
 
         blob_container = storage.BlobContainer(
-            account_name=self.config.lakehouse['account_name'],
+            account_name=account.name,
             resource_name=self.config.lakehouse['container_name'],
             resource_group_name=self.config.lakehouse['resource_group_name']
         )
         blob = storage.Blob(
-            account_name=self.config.lakehouse['account_name'],
+            account_name=account.name,
             resource_name=self.config.lakehouse['blob_name'],
             container_name= self.config.lakehouse['container_name'],
             resource_group_name=self.config.lakehouse['resource_group_name']
-        )
+         )
 
-        pe = storage.PrivateEndpointConnection('privateEndpointConnection',
-                   account_name=self.config.lakehouse['account_name'],
-                   private_endpoint_connection_name=self.config.lakehouse['private_endpoint_name'],
+        pe = storage.PrivateEndpointConnection(resource_name=self.config.lakehouse['private_endpoint_name'],
+                   account_name=account.name,
                    private_link_service_connection_state=storage.PrivateLinkServiceConnectionStateArgs(
                    description="Auto-Approved",
                    status=storage.PrivateEndpointServiceConnectionStatus.APPROVED,
@@ -65,41 +64,29 @@ class StorageResource:
         )
         blob_container = storage.BlobContainer(
             resource_group_name=self.config.landing_zone['resource_group_name'],
-            resource_name='lz-cont',
-            account_name=self.config.landing_zone['account_name']
+            resource_name=self.config.landing_zone['container_name'],
+            account_name=account.name
         )
 
         blob = storage.Blob(
-                            account_name=self.config.landing_zone['account_name'],
-                            resource_name='blob-lz',
-                            container_name='lz-cont',
+                            account_name=account.name,
+                            resource_name=self.config.landing_zone['blob_name'],
+                            container_name=self.config.landing_zone['container_name'],
                             resource_group_name=self.config.landing_zone['resource_group_name']
         )
 
         local_user = storage.LocalUser(
-            storage.LocalUser("localUserResource",
-    storage_account_id=account.id,
-    home_directory="string",
-    name="string", # change
-    permission_scopes=[storage.LocalUserPermissionScopeArgs(
-        permissions=storage.LocalUserPermissionScopePermissionsArgs( # fix this because doesnt exist
-            create=False,
-            delete=False,
-            list=False,
-            read=False,
-            write=False,
-        ),
-        resource_name="string", # change
-        service="string",
-    )],
-    ssh_authorized_keys=[storage.LocalUserSshAuthorizedKeyArgs(
-        key="string",
-        description="string",
-    )],
-    ssh_key_enabled=False,
-    ssh_password_enabled=False)
-
-        )
+            resource_group_name=self.config.landing_zone['resource_group_name'],
+            resource_name=self.config.landing_zone['local_user_name'],
+            account_name=account.name,
+            has_shared_key=False,
+            has_ssh_key=False,
+            has_ssh_password=True,
+            permission_scopes=[storage.PermissionScopeArgs(
+                permissions='rwlc',
+                service="blob",
+                resource_name=self.config.landing_zone['container_name'])]
+            )
 
         pulumi.export('account_id', account.id)
 
