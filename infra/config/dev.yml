@@ -60,12 +60,12 @@ nsg_config: # configuration for the security layer, here for now, gonna have to 
       destination_address_prefix: "*"
 
 bastion_host:
-  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  resource_group_name: rg-ac-cus-adb-acclrtor
   name: bastion-host
   location: southcentralus
-  ip_config_name:
-  subnet_id:
-  public_ip_address_id:
+  ip_config_name: bastionIPConfig
+  subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/AzureBastionSubnet
+  public_ip_address_name: pulumiPublicIP
 
 
 vnet:

@@ -11,6 +11,14 @@ class BastionHostResource:
         self.create_bastion_host()
 
     def create_bastion_host(self):
+
+        public_ip = network.PublicIPAddress(self.config.public_ip_address_name,
+    resource_group_name=self.config.resource_group_name,
+    location=self.config.location,
+    public_ip_allocation_method="Static",
+    sku=network.PublicIPAddressSkuArgs(
+        name="Standard"))
+
         bastion = network.BastionHost(
             resource_name= self.config.name,
             resource_group_name=self.config.resource_group_name,
@@ -21,7 +29,7 @@ class BastionHostResource:
                     id=self.config.subnet_id)
                     ,
                 public_ip_address=network.SubResourceArgs(
-                    id=self.config.public_ip_address_id)
+                    id=public_ip.id)
 
             )]
         )

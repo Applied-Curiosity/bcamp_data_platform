@@ -99,7 +99,7 @@ class BastionHostConfig:
     name: str
     ip_config_name: str
     subnet_id: str
-    public_ip_address_id: str
+    public_ip_address_name: str
 
 
 @dataclass
