@@ -9,6 +9,8 @@ class LakehouseConfig:
     resource_group_name: str
     container_name: str
     blob_name: str
+    private_endpoint_name: str
+    subnet_id: str
     location: str
     account_tier: str
     replication_type: str

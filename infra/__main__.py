@@ -33,11 +33,12 @@ with open(config_path, 'r') as file:
 config_dto = ConfigDTO.from_dict(config_data)
 
 vnet_resource = VirtualNetworkResource(config_dto.vnet) # think this needs to go first
-# storage_resource = StorageResource(config_dto.storage)
+#bastion_resource = BastionHostResource(config_dto.bastion) # takes a long time to deploy
+nsg_resource = SecurityResource(config_dto.nsg)
+storage_resource = StorageResource(config_dto.storage)
 # keyvault_resource = KeyvaultResource(config_dto.keyvault)
-# nsg_resource = SecurityResource(config_dto.nsg)
+
 # vm_resource = VirtualMachineResource(config_dto.vm)
-bastion_resource = BastionHostResource(config_dto.bastion)
 
 
 

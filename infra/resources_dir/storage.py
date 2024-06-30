@@ -41,6 +41,21 @@ class StorageResource:
             resource_group_name=self.config.lakehouse['resource_group_name']
          )
 
+        pe = network.PrivateEndpoint(self.config.lakehouse['private_endpoint_name'],
+                                     resource_group_name=self.config.lakehouse['resource_group_name'],
+                                     location=self.config.lakehouse['location'],
+                                     subnet=network.SubnetArgs(id=self.config.lakehouse['subnet_id']),
+                                    private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
+                                                                    name="connection1",
+                                                                    private_link_service_id=account.id,
+                                                                    group_ids=["blob"],
+                            private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(
+                                status="Approved",
+                        description="Auto-approved",
+            ),
+        )]
+    )
+
 
         pulumi.export("account_id", account.id)
 

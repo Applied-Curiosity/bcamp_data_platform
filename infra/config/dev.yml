@@ -7,6 +7,7 @@ storage_account: # configuration for storage, might have to alter this, there is
      container_name: lk-cont
      blob_name: blob-lakehouse
      private_endpoint_name: pe-conn
+     subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/subnet-lakehouse
      account_tier: Standard
      replication_type: LRS
   landing_zone:
@@ -38,26 +39,63 @@ keyvault: # configuration for keyvault, gonna have to change as well
 nsg_config: # configuration for the security layer, here for now, gonna have to alter to change the architecture
   name: main-nsg
   location: southcentralus
-  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  resource_group_name: rg-ac-cus-adb-acclrtor
   security_rules:
-    - name: allow-http
+    - name: AllowVnetInbound
       priority: 100
       direction: Inbound
       access: Allow
       protocol: Tcp
       source_port_range: "*"
-      destination_port_range: "80"
-      source_address_prefix: "*"
+      destination_port_range: "*"
+      source_address_prefix: 172.16.0.0/16
       destination_address_prefix: "*"
-    - name: allow-https
-      priority: 110
+    - name: AllowAzureLoadBalancer
+      priority: 101
       direction: Inbound
       access: Allow
       protocol: Tcp
       source_port_range: "*"
-      destination_port_range: "443"
+      destination_port_range: "*"
+      source_address_prefix: "AzureLoadBalancer"
+      destination_address_prefix: "*"
+    - name: DenyAllInbound
+      priority: 102
+      direction: Inbound
+      access: Deny
+      protocol: Tcp
+      source_port_range: "*"
+      destination_port_range: "*"
       source_address_prefix: "*"
       destination_address_prefix: "*"
+    - name: AllowVnetOutbound
+      priority: 100
+      direction: Outbound
+      access: Allow
+      protocol: Tcp
+      source_port_range: "*"
+      destination_port_range: "*"
+      source_address_prefix: "*"
+      destination_address_prefix: 172.16.0.0/16
+    - name: AllowInternetOutbound
+      priority: 101
+      direction: Outbound
+      access: Allow
+      protocol: Tcp
+      source_port_range: "*"
+      destination_port_range: "*"
+      source_address_prefix: "*"
+      destination_address_prefix: "Internet"
+    - name: DenyAllOutbound
+      priority: 102
+      direction: Outbound
+      access: Deny
+      protocol: Tcp
+      source_port_range: "*"
+      destination_port_range: "*"
+      source_address_prefix: "*"
+      destination_address_prefix: "*"
+
 
 bastion_host:
   resource_group_name: rg-ac-cus-adb-acclrtor
