@@ -2,7 +2,7 @@ import sys
 sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
 import pulumi
-from pulumi_azure_native import keyvault, resources
+from pulumi_azure_native import keyvault, network, resources
 from dto import KeyvaultConfig, AccessPolicyEntry
 
 
@@ -31,6 +31,22 @@ class KeyvaultResource:
                 ) for self.config.ap in self.config.access_policies]
             )
         )
+
+
+        pe = network.PrivateEndpoint('pe-kv',
+                                     resource_group_name=self.config.resource_group_name,
+                                     location=self.config.location,
+                                     subnet=network.SubnetArgs(id=self.config.subnet_id),
+                                    private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
+                                                                    name="kvlink",
+                                                                    private_link_service_id=kv.id,
+                                                                    group_ids=["vault"],
+                            private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(
+                                status="Approved",
+                        description="Auto-approved",
+            ),
+        )]
+    )
 
         pulumi.export('keyvault_id', kv.id)
 

@@ -21,7 +21,7 @@ class VirtualMachineResource:
         location=self.config.location,
         network_profile=compute.NetworkProfileArgs(
             network_interfaces=[compute.NetworkInterfaceReferenceArgs(
-                id="/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}",
+                id="/subscriptions/{subscription-id}/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/networkInterfaces/",
                 primary=True,
             )],
         ),
@@ -30,13 +30,11 @@ class VirtualMachineResource:
             admin_username=self.config.user,
             computer_name=self.config.os_computer_name
         ),
-        resource_group_name="myResourceGroup",
+        resource_group_name=self.config.resource_group_name,
         storage_profile=compute.StorageProfileArgs(
             image_reference=compute.ImageReferenceArgs(
-                offer="UbuntuServer",
-                publisher="Canonical",
-                sku="16.04-LTS",
-                version="latest",
+                offer="windows-11",
+                publisher="microsoftwindowsdesktop"
             ),
             os_disk=compute.OSDiskArgs(
                 caching=compute.CachingTypes.READ_WRITE,
@@ -47,7 +45,11 @@ class VirtualMachineResource:
                 name=self.config.os_disk_name,
             ),
         ),
-        vm_name="myVM")
+        vm_name="myVM"
+        )
+
+
+
 
         pulumi.export('vm_id', virtual_machine.id)
 
