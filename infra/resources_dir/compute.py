@@ -3,26 +3,38 @@
 # sys.path.append('/workspaces/bcamp_data_platform_azure/infra')
 
 import pulumi
-from pulumi_azure_native import compute
+from pulumi_azure_native import compute, network
 from dto import VirtualMachineConfig
 
 
 class VirtualMachineResource:
-    def __init__(self, config:VirtualMachineConfig):
+    def __init__(self, config: VirtualMachineConfig):
         self.config = config
         self.create_vm()
 
     def create_vm(self):
         # config = self.config
-        virtual_machine = compute.VirtualMachine("virtualMachine",
+
+        network_interface = network.NetworkInterface("vm-nw-nic",
+                                                     resource_group_name=self.config.resource_group_name,
+                                                     ip_configurations=[network.NetworkInterfaceIPConfigurationArgs(
+                                                         name='ipConfig',
+                                                         subnet=network.SubnetArgs(
+                                                             id=self.config.subnet_id
+                                                         ),
+                                                         private_ip_allocation_method='Dynamic'
+
+                                                     )])
+
+        virtual_machine = compute.VirtualMachine(self.config.vm_name,
         hardware_profile=compute.HardwareProfileArgs(
             vm_size=compute.VirtualMachineSizeTypes.STANDARD_D2S_V3,
         ),
         location=self.config.location,
         network_profile=compute.NetworkProfileArgs(
             network_interfaces=[compute.NetworkInterfaceReferenceArgs(
-                id="/subscriptions/{subscription-id}/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/networkInterfaces/",
-                primary=True,
+                id=network_interface.id,
+                primary=True
             )],
         ),
         os_profile=compute.OSProfileArgs(
@@ -34,7 +46,9 @@ class VirtualMachineResource:
         storage_profile=compute.StorageProfileArgs(
             image_reference=compute.ImageReferenceArgs(
                 offer="windows-11",
-                publisher="microsoftwindowsdesktop"
+                publisher="microsoftwindowsdesktop",
+                sku="win11-22h2-pro",
+                version='Latest'
             ),
             os_disk=compute.OSDiskArgs(
                 caching=compute.CachingTypes.READ_WRITE,

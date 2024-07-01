@@ -16,7 +16,8 @@ storage_account: # configuration for storage, might have to alter this, there is
      location: southcentralus
      container_name: lz-cont
      blob_name: blob-lz
-     private_endpoint_name: pe-conn
+     private_endpoint_name: pe-conn-2
+     subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/subnet-sftp-landingzone
      local_user_name: localuserlz
      account_tier: Standard
      replication_type: LRS
@@ -24,7 +25,7 @@ storage_account: # configuration for storage, might have to alter this, there is
 
 keyvault: # configuration for keyvault, gonna have to change as well
   resource_name: vault
-  resource_group_name: rg-ac-cus-adb-acclrtor00ebbb6a
+  resource_group_name: rg-ac-cus-adb-acclrtor
   location: southcentralus
   sku_name: STANDARD
   tenant_id: 12345678-1234-5678-1234-567812345678
@@ -34,7 +35,8 @@ keyvault: # configuration for keyvault, gonna have to change as well
       permissions:
         keys: ["get", "list", "create", "delete"]
         secrets: ["get", "list", "set", "delete"]
-  outputs: ""
+  subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/subnet-key-vault
+
 
 nsg_config: # configuration for the security layer, here for now, gonna have to alter to change the architecture
   name: main-nsg
@@ -133,6 +135,9 @@ vnet:
     - resource_name: subnet
       name: private-subnet
       address_prefix: 172.16.5.0/24
+    - resource_name: subnet
+      name: subnet-sftp-landingzone
+      address_prefix: 172.16.9.0/24
 
 
 
@@ -216,11 +221,12 @@ adb: # don't know if this is right
           actionsRequired: ""
 
 virtual_machine:
-  resource_group_name: myResourceGroup # change this
+  resource_group_name: rg-ac-cus-adb-acclrtor # change this
   location: southcentralus
-  vm_name: myVM
+  vm_name: vm-adb-dl
   user: your-username
-  pw: your-password
-  network_interface_id: /subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Network/networkInterfaces/{existing-nic-name}
+  pw: Light House High Waves
+  network_interface_name: vm-adb-dl-nic
+  subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/default
   os_computer_name: myVM
   os_disk_name: myVMosdisk

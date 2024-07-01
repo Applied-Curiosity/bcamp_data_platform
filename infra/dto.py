@@ -47,7 +47,7 @@ class KeyvaultConfig:
     sku_name: str
     tenant_id: str
     access_policies: List[AccessPolicyEntry]
-    outputs: str
+    subnet_id: str
 
 @dataclass
 class KeyvaultConfigDTO:
@@ -111,7 +111,8 @@ class VirtualMachineConfig: # might be missing a large amount of compute configu
     vm_name: str
     user: str
     pw: str
-    network_interface_id: str
+    network_interface_name: str
+    subnet_id: str
     os_computer_name: str
     os_disk_name: str
 
