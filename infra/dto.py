@@ -10,6 +10,9 @@ class LakehouseConfig:
     container_name: str
     blob_name: str
     private_endpoint_name: str
+    private_link_name: str
+    dfs_private_endpoint_name: str
+    dfs_private_link_name: str
     subnet_id: str
     location: str
     account_tier: str
@@ -22,6 +25,10 @@ class LandingZoneConfig:
     location: str
     container_name: str
     blob_name: str
+    private_endpoint_name: str
+    private_link_name: str
+    dfs_private_endpoint_name: str
+    dfs_private_link_name: str
     account_tier: str
     replication_type: str
 
@@ -116,6 +123,19 @@ class VirtualMachineConfig: # might be missing a large amount of compute configu
     os_computer_name: str
     os_disk_name: str
 
+@dataclass
+class DatabricksConfig:
+    resource_group_name: str
+    location: str
+    lakehouse_access_connector_name: str
+    landing_zone_access_connector_name: str
+    workspace_name: str
+    private_subnet_name: str
+    public_subnet_name: str
+    subnet_id: str
+
+
+
 
 
 
@@ -127,6 +147,7 @@ class ConfigDTO:
     vnet: VirtualNetworkConfig
     bastion: BastionHostConfig
     vm: VirtualMachineConfig
+    databricks: DatabricksConfig
 
     @staticmethod
     def from_dict(config: dict) -> 'ConfigDTO':
@@ -136,5 +157,6 @@ class ConfigDTO:
             nsg=NSGConfig(**config['nsg_config']),
             vnet=VirtualNetworkConfig(**config['vnet']),
             bastion=BastionHostConfig(**config['bastion_host']),
-            vm=VirtualMachineConfig(**config['virtual_machine'])
+            vm=VirtualMachineConfig(**config['virtual_machine']),
+            databricks=DatabricksConfig(**config['databricks'])
         )

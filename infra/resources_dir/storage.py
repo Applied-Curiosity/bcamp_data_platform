@@ -46,7 +46,7 @@ class StorageResource:
                                      location=self.config.lakehouse['location'],
                                      subnet=network.SubnetArgs(id=self.config.lakehouse['subnet_id']),
                                     private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
-                                                                    name="connection1",
+                                                                    name=self.config.lakehouse['private_link_name'],
                                                                     private_link_service_id=account.id,
                                                                     group_ids=["blob"],
                             private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(
@@ -56,12 +56,12 @@ class StorageResource:
         )]
     )
 
-        dfs_pe = network.PrivateEndpoint('dfs-pe', # fix this and include in the configuration
+        dfs_pe = network.PrivateEndpoint(resource_name=self.config.lakehouse['dfs_private_endpoint_name'],
                                      resource_group_name=self.config.lakehouse['resource_group_name'],
                                      location=self.config.lakehouse['location'],
                                      subnet=network.SubnetArgs(id=self.config.lakehouse['subnet_id']),
                                     private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
-                                                                    name="connection2",
+                                                                    name=self.config.lakehouse['dfs_private_link_name'],
                                                                     private_link_service_id=account.id,
                                                                     group_ids=["dfs"],
                             private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(
@@ -115,7 +115,7 @@ class StorageResource:
                                      location=self.config.landing_zone['location'],
                                      subnet=network.SubnetArgs(id=self.config.landing_zone['subnet_id']),
                                     private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
-                                                                    name="connection1",
+                                                                    name=self.config.landing_zone['private_link_name'],
                                                                     private_link_service_id=account.id,
                                                                     group_ids=["blob"],
                             private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(
@@ -125,12 +125,12 @@ class StorageResource:
         )]
     )
 
-        dfs_pe = network.PrivateEndpoint('dfs-pe-lz', # fix this and include in the configuration
+        dfs_pe = network.PrivateEndpoint(resource_name=self.config.lakehouse['dfs_private_endpoint_name'], # fix this and include in the configuration
                                      resource_group_name=self.config.landing_zone['resource_group_name'],
                                      location=self.config.landing_zone['location'],
                                      subnet=network.SubnetArgs(id=self.config.landing_zone['subnet_id']),
                                     private_link_service_connections=[network.PrivateLinkServiceConnectionArgs(
-                                                                    name="connection2",
+                                                                    name=self.config.lakehouse['dfs_private_link_name'],
                                                                     private_link_service_id=account.id,
                                                                     group_ids=["dfs"],
                             private_link_service_connection_state=network.PrivateLinkServiceConnectionStateArgs(

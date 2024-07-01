@@ -6,7 +6,10 @@ storage_account: # configuration for storage, might have to alter this, there is
      location: southcentralus
      container_name: lk-cont
      blob_name: blob-lakehouse
-     private_endpoint_name: pe-conn
+     private_endpoint_name: pe-lakehouse
+     private_link_name: pl-service-name-lk
+     dfs_private_endpoint_name: pe-lakehouse-dfs
+     dfs_private_link_name: dfs-pl-name-lk
      subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/subnet-lakehouse
      account_tier: Standard
      replication_type: LRS
@@ -17,6 +20,9 @@ storage_account: # configuration for storage, might have to alter this, there is
      container_name: lz-cont
      blob_name: blob-lz
      private_endpoint_name: pe-conn-2
+     private_link_name: pl-service-name-lz
+     dfs_private_endpoint_name: pe-lz-dfs
+     dfs_private_link_name: dfs-pl-name-lz
      subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/subnet-sftp-landingzone
      local_user_name: localuserlz
      account_tier: Standard
@@ -130,95 +136,24 @@ vnet:
       name: databricks-workspace
       address_prefix: 172.16.1.0/24
     - resource_name: subnet
-      name: public_subnet
-      address_prefix: 172.16.14.0/24
-    - resource_name: subnet
-      name: private-subnet
-      address_prefix: 172.16.5.0/24
-    - resource_name: subnet
       name: subnet-sftp-landingzone
       address_prefix: 172.16.9.0/24
 
 
 
-adb: # don't know if this is right
-  $schema: ""
-  contentVersion: ""
-  parameters:
-    workspaces_name:
-      defaultValue: ""
-      type: ""
-    externalid:
-      defaultValue: ""
-      type: "String"
-  variables: {}
-  resources:
-    - type: ""
-      apiVersion: ""
-      name: ""
-      location: ""
-      tags:
-        environment: ""
-      sku:
-        name: ""
-      properties:
-        defaultCatalog:
-          initialType: ""
-        publicNetworkAccess: ""
-        requiredNsgRules: ""
-        managedResourceGroupId: ""
-        parameters:
-          customPrivateSubnetName:
-            value: ""
-          customPublicSubnetName:
-            value: ""
-          customVirtualNetworkId:
-            value: ""
-          enableNoPublicIp:
-            value: ""
-          prepareEncryption:
-            value: ""
-          publicIpName:
-            value: ""
-          requireInfrastructureEncryption:
-            value: ""
-          storageAccountName:
-            value: ""
-          storageAccountSkuName:
-            value: ""
-          vnetAddressPrefix:
-            value: ""
-        authorizations:
-          - principalId: ""
-            roleDefinitionId: ""
-        createdBy: {}
-        updatedBy: {}
-    - type: "Microsoft.Databricks/workspaces/privateEndpointConnections"
-      apiVersion: "2023-09-15-preview"
-      name: ""
-      dependsOn:
-        - ""
-      properties:
-        privateEndpoint: {}
-        groupIds:
-          - ""
-        privateLinkServiceConnectionState:
-          status: ""
-          description: ""
-          actionsRequired: ""
-    - type: "Microsoft.Databricks/workspaces/privateEndpointConnections"
-      apiVersion: "2023-09-15-preview"
-      name: ""
-      dependsOn:
-        - ""
-      properties:
-        privateEndpoint: {}
-        groupIds:
-          - ""
-        privateLinkServiceConnectionState:
-          status: ""
-          description: ""
-          actionsRequired: ""
+adb:
+  resource_group_name: rg-ac-cus-adb-acclrtor
+  location: southcentralus
+  lakehouse_access_connector_name: lk-access-connector
+  landing_zone_access_connector_name:  lz-access-connector
+  workspace_name: adb-workspace
+  private_subnet_name: private-subnet
+  public_subnet_name: public-subnet
+  subnet_id: /subscriptions/7e1258ee-836d-4df2-85bd-8c7e91d059f9/resourceGroups/rg-ac-cus-adb-acclrtor/providers/Microsoft.Network/virtualNetworks/vnet-demo-databricks/subnets/databricks-workspace
+
+
+
+
 
 virtual_machine:
   resource_group_name: rg-ac-cus-adb-acclrtor # change this
